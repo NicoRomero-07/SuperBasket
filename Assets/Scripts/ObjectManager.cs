@@ -1,18 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class DetectarObjeto : MonoBehaviour
+public class ObjectManager : MonoBehaviour
 {
     private GameObject pickedObject;
+    private float startTime;
+    private bool pressed;
+
+    public Image powerBar;
+    public float maxPressingTime;
     public GameObject handPoint;
+    public int power;
     public Camera cam;
     public int range;
+
     // Start is called before the first frame update
     void Start()
     {
-        range = 1;
-        
+        pressed = false;
+        powerBar.fillAmount = 0;
 
     }
 
@@ -22,12 +31,20 @@ public class DetectarObjeto : MonoBehaviour
         
         if (pickedObject != null)
         {
-            if (Input.GetKey("r"))
+           
+            if (Input.GetMouseButtonDown(0))
             {
-                pickedObject.gameObject.GetComponent<Rigidbody>().useGravity = true;
-                pickedObject.GetComponent<Rigidbody>().isKinematic = false;
-                pickedObject.transform.SetParent(null);
-                pickedObject = null;
+                startTime = Time.time;
+                pressed = true;
+            }
+            if (pressed)
+            {
+                float currentPower = Time.time - startTime;
+                powerBar.fillAmount = currentPower / maxPressingTime;
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                shot();
             }
         }
         else
@@ -50,5 +67,26 @@ public class DetectarObjeto : MonoBehaviour
             }
         }
         
+    }
+
+    private void shot()
+    {
+        float longPress = Time.time - startTime;
+        if (longPress > maxPressingTime)
+        {
+            longPress = maxPressingTime;
+        }
+        pressed = false;
+        powerBar.fillAmount = 0;
+
+        Vector3 direction = cam.transform.forward * longPress * power;
+        direction.y += 2;
+        Rigidbody rbPickedObject = pickedObject.GetComponent<Rigidbody>();
+        pickedObject.gameObject.GetComponent<Rigidbody>().useGravity = true;
+        pickedObject.GetComponent<Rigidbody>().isKinematic = false;
+        pickedObject.transform.SetParent(null);
+        pickedObject = null;
+
+        rbPickedObject.AddForce(direction, ForceMode.Impulse);
     }
 }
