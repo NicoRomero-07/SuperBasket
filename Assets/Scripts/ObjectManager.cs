@@ -10,18 +10,46 @@ public class ObjectManager : MonoBehaviour
     private float startTime;
     private bool pressed;
 
+    private GameObject handPoint;
+    private GameObject cartPoint;
+    private GameObject player;
+
+    [Header("HUD")]
     public Image powerBar;
-    public float maxPressingTime;
-    public GameObject handPoint;
-    public int power;
+
+    [Header("Shot Options")]
+    public float maxPressingTime = 2;
+    public int power = 5;
+    public int range = 2;
+
+    [Header("Other")]
+    
     public Camera cam;
-    public int range;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         pressed = false;
         powerBar.fillAmount = 0;
+        player = GameObject.FindGameObjectWithTag("Player");
+        bool asignedCart=false;
+        bool asignedHand = false;
+        int numOfChilds = player.transform.childCount;
+        GameObject current = null;
+        int i = 0;
+        while(i<numOfChilds && (!asignedCart || !asignedHand))
+        {
+            current = player.transform.GetChild(i).gameObject;
+            if(current.name == "Hand")
+            {
+                handPoint = current.transform.GetChild(0).gameObject;
+            }else if (current.name == "CartPoint")
+            {
+                cartPoint = current;
+            }
+            i++;
+        }
 
     }
 
@@ -54,19 +82,38 @@ public class ObjectManager : MonoBehaviour
             {
                 if (hit.collider.gameObject.tag == "Object")
                 {
-                    print("Objeto en frente " + hit.collider.gameObject.tag + " a distancia: " + hit.distance);
                     if (Input.GetKey("e") && pickedObject == null)
                     {
-                        hit.collider.gameObject.GetComponent<Rigidbody>().useGravity = false;
-                        hit.collider.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-                        hit.collider.gameObject.transform.position = handPoint.gameObject.transform.position;
-                        hit.collider.gameObject.transform.SetParent(handPoint.gameObject.transform);
-                        pickedObject = hit.collider.gameObject;
+                        take(hit.collider.gameObject);
+                    }
+                }else if (hit.collider.gameObject.tag == "Cart")
+                {
+                    if (Input.GetKey("e") && pickedObject == null)
+                    {
+                        takeCart(hit.collider.gameObject);
                     }
                 }
             }
         }
         
+    }
+
+    private void takeCart(GameObject gameObject)
+    {
+        gameObject.transform.localEulerAngles = player.transform.localEulerAngles;
+        gameObject.transform.position = cartPoint.gameObject.transform.position;
+        gameObject.transform.SetParent(cartPoint.gameObject.transform);
+       
+        pickedObject = gameObject.gameObject;
+    }
+
+    private void take(GameObject gameObject)
+    {
+        gameObject.GetComponent<Rigidbody>().useGravity = false;
+        gameObject.GetComponent<Rigidbody>().isKinematic = true;
+        gameObject.transform.position = handPoint.gameObject.transform.position;
+        gameObject.transform.SetParent(handPoint.gameObject.transform);
+        pickedObject = gameObject.gameObject;
     }
 
     private void shot()

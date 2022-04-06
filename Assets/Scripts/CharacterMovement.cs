@@ -7,13 +7,14 @@ public class CharacterMovement : MonoBehaviour
     private Vector3 move = Vector3.zero;
     CharacterController characterController;
 
-    [Header("Opciones Personaje")]
+    [Header("Character Options")]
     public float speed = 5.0f;
     public float runSpeed = 7.0f;
     public float jumpSpeed = 6.0f;
     public float gravity = 20.0f;
+    public bool cartTaken;
 
-    [Header("Opciones Camara")]
+    [Header("Camera Options")]
     public Camera cam;
     public float maxRotation=65.0f;
     public float minRotation=-62.0f;
@@ -25,7 +26,8 @@ public class CharacterMovement : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
-        Cursor.lockState = CursorLockMode.Locked; 
+        Cursor.lockState = CursorLockMode.Locked;
+        cartTaken = false;
     }
 
     // Update is called once per frame
