@@ -101,6 +101,7 @@ public class ObjectManager : MonoBehaviour
     private void takeCart(GameObject gameObject)
     {
         gameObject.transform.localEulerAngles = player.transform.localEulerAngles;
+        gameObject.transform.rotation = cartPoint.gameObject.transform.rotation;
         gameObject.transform.position = cartPoint.gameObject.transform.position;
         gameObject.transform.SetParent(cartPoint.gameObject.transform);
        
