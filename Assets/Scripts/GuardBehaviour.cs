@@ -32,8 +32,18 @@ public class GuardBehaviour : MonoBehaviour
         }else if (state == States.Analyze)
         {
             analyze();
+        }else if(state == States.Persecute)
+        {
+            persecute();
         }
     }
+
+    private void persecute()
+    {
+        myAgent.SetDestination(suspicious.transform.position);
+        
+    }
+
     public void setState(int newState)
     {
         if (newState == 0) state = States.Rest;
@@ -49,11 +59,13 @@ public class GuardBehaviour : MonoBehaviour
     private void analyze()
     {
         myAgent.SetDestination(suspicious.transform.position);
+        
         if (myAgent.remainingDistance <= myAgent.stoppingDistance)
-        {
-            
+        { 
+
             if (badBehaviour())
             {
+                myAgent.stoppingDistance = 0;
                 setState(3);
             }
         }

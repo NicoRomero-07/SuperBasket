@@ -25,7 +25,7 @@ public class GuardDetection : MonoBehaviour
                 {
                     NavMeshAgent myAgent = guard.GetComponent<NavMeshAgent>();
                     myAgent.SetDestination(hit.collider.gameObject.transform.position);
-
+                    myAgent.stoppingDistance = 2;
                     guardBehaviour.setSuspicious(hit.collider.gameObject);
                     guardBehaviour.setState(2);
                 }
