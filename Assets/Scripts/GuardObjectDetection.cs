@@ -31,21 +31,22 @@ public class GuardObjectDetection : MonoBehaviour
         if (other.gameObject.tag == "Object")
         {
 
-            if (other.gameObject.GetComponent<ObjectGrounded>().isGrounded())
+            if (other.gameObject.GetComponent<ObjectGrounded>().isGrounded() && objects.Contains(other.gameObject))
             {
                 objects.Remove(other.gameObject);
             }
         }
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Object")
         {
-
-            if (other.gameObject.GetComponent<ObjectGrounded>().isGrounded())
+            if (other.gameObject.GetComponent<ObjectGrounded>().isGrounded() && !objects.Contains(other.gameObject))
             {
                 objects.Add(other.gameObject);
             }
         }
     }
+   
+    
 }

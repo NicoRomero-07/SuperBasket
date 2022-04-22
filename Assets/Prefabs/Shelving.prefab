@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1797507703229690301}
   m_Layer: 0
   m_Name: Up
-  m_TagString: Untagged
+  m_TagString: Shelf
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 1797507703239600344}
   m_Layer: 0
   m_Name: Down
-  m_TagString: Untagged
+  m_TagString: Shelf
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 1797507703365712846}
   m_Layer: 0
   m_Name: Left
-  m_TagString: Untagged
+  m_TagString: Shelf
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -297,7 +297,7 @@ GameObject:
   - component: {fileID: 8495338419358837966}
   m_Layer: 0
   m_Name: Shelving
-  m_TagString: Untagged
+  m_TagString: Shelf
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -353,7 +353,7 @@ GameObject:
   - component: {fileID: 1797507704057637044}
   m_Layer: 0
   m_Name: Right
-  m_TagString: Untagged
+  m_TagString: Shelf
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -448,7 +448,7 @@ GameObject:
   - component: {fileID: 1797507705148484446}
   m_Layer: 0
   m_Name: Shelf (1)
-  m_TagString: Untagged
+  m_TagString: Shelf
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -543,7 +543,7 @@ GameObject:
   - component: {fileID: 1797507705240636538}
   m_Layer: 0
   m_Name: Shelf
-  m_TagString: Untagged
+  m_TagString: Shelf
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -638,7 +638,7 @@ GameObject:
   - component: {fileID: 7987472127407736272}
   m_Layer: 0
   m_Name: Shelf (2)
-  m_TagString: Untagged
+  m_TagString: Shelf
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8

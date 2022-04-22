@@ -114,7 +114,10 @@ public class ObjectManager : MonoBehaviour
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
         gameObject.transform.position = handPoint.gameObject.transform.position;
         gameObject.transform.SetParent(handPoint.gameObject.transform);
+        
         pickedObject = gameObject.gameObject;
+        pickedObject.GetComponent<ObjectGrounded>().setGrounded(false);
+        pickedObject.GetComponent<ObjectGrounded>().setOnShelf(false);
     }
 
     private void shot()
