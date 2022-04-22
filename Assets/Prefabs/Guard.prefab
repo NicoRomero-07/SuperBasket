@@ -835,7 +835,7 @@ GameObject:
   - component: {fileID: 1362490975113599705}
   m_Layer: 0
   m_Name: Guard
-  m_TagString: Untagged
+  m_TagString: Guard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -897,6 +897,7 @@ MonoBehaviour:
   state: 0
   patrolPoints: []
   myAgent: {fileID: 0}
+  arrestedPoint: {fileID: 0}
   guardRoom: {fileID: 0}
 --- !u!1 &7050126688364934539
 GameObject:

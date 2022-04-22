@@ -8,6 +8,7 @@ TagManager:
   - Cart
   - Floor
   - Shelf
+  - Guard
   layers:
   - Default
   - TransparentFX

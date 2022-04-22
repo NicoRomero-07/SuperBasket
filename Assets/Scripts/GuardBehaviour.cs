@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = System.Random;
 
 public class GuardBehaviour : MonoBehaviour
 {
@@ -29,9 +30,11 @@ public class GuardBehaviour : MonoBehaviour
     private float rotation;
     private float startRotation;
 
+    private int numPatrolPoints;
     private bool suspiciousLost;
+    public bool stopped;
 
-
+    private Random rnd = new Random();
     private GuardDetection[] rays;
 
     // Start is called before the first frame update
@@ -39,13 +42,14 @@ public class GuardBehaviour : MonoBehaviour
     {
         rays = transform.Find("Core").gameObject.transform.Find("Head").gameObject.GetComponentsInChildren<GuardDetection>();
 
+        stopped = 
         suspiciousLost = true; 
         numVueltas = 0;
-
+        numPatrolPoints = 0;
         rotation = 0;
 
         if (myAgent == null) myAgent = GetComponent<NavMeshAgent>();
-        state = States.Patrol;
+        setPatrol();
 
         arrestedPoint = transform.Find("ArrestedPoint").gameObject;
         myAgent.SetDestination(patrolPoints[actualPoint].transform.position);
@@ -124,6 +128,7 @@ public class GuardBehaviour : MonoBehaviour
         float currentTime = Time.realtimeSinceStartup;
         if (myAgent.remainingDistance <= myAgent.stoppingDistance)
         {
+            stopped = true;
             if (currentTime - startRest > 10)
             {
                 setPatrol();
@@ -172,6 +177,7 @@ public class GuardBehaviour : MonoBehaviour
     {
         myAgent.SetDestination(suspicious.transform.position);
         myAgent.stoppingDistance = 0;
+        stopped = false;
         setState(3);
     }
 
@@ -222,7 +228,7 @@ public class GuardBehaviour : MonoBehaviour
         {
             if (myAgent.remainingDistance <= myAgent.stoppingDistance)
             {
-
+                stopped = true;
                 if (badBehaviour())
                 {
                     setPersecute();
@@ -240,6 +246,7 @@ public class GuardBehaviour : MonoBehaviour
         setSuspicious(analized);
         setState(2);
     }
+
     private bool badBehaviour()
     {
         bool bad = false;
@@ -268,16 +275,20 @@ public class GuardBehaviour : MonoBehaviour
     {
         if (myAgent.remainingDistance <= myAgent.stoppingDistance)
         {
-            actualPoint++;
-            if (actualPoint >= patrolPoints.Length)
+            numPatrolPoints++;
+            if (numPatrolPoints > 12)
             {
                 numVueltas++;
-                actualPoint = 0;
-                if (numVueltas == 1)
-                {
-                    setRest();
-                }
+                numPatrolPoints = 0;
             }
+            
+                
+            actualPoint = rnd.Next(patrolPoints.Length);
+            if (numVueltas == 1)
+            {
+                setRest();
+            }
+            
             myAgent.destination = patrolPoints[actualPoint].transform.position;
         }
     }
@@ -290,6 +301,7 @@ public class GuardBehaviour : MonoBehaviour
     public void setPatrol()
     {
         myAgent.stoppingDistance = 2;
+        stopped = false;
         startPatrol = Time.realtimeSinceStartup;
         myAgent.SetDestination(patrolPoints[actualPoint].transform.position);
         setState(1);
